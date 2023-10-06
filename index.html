@@ -3,9 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To Do</title>
+    <script src="https://kit.fontawesome.com/394111977c.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            text-transform: capitalize;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-image: url(img/rough-yellow-background.avif);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            padding: 10px;
+        }
+
+        .notes-container{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            overflow: auto;
+            /* flex-direction: column; */
+        }
+
+
+        .notes{
+            width: fit-content;
+            height: fit-content;
+            background-color: yellow;
+            padding: 10px 20px ;
+            border-radius: 10px;
+            position: relative;
+            margin-bottom: 10px;
+
+        }
+
+        .notes *{
+            padding: 5px;
+        }
+
+        .menu{
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            display: inline;
+            padding: 0;
+            cursor: pointer;
+
+        }
+
+        .fa-xmark{
+            color: rgb(166, 166, 48);
+        }
+
+        .form-container{
+            position: fixed;
+            border: 1px solid;
+            bottom: 10px;
+            width: auto;
+            left: 20px;
+            right: 20px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            z-index: 999;
+            
+        }
+
+        .form-container input{
+            width: 90%;
+            display: block;
+            align-self: center;
+            padding: 10px;
+            margin: 2px 0px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .add{
+            width: fit-content;
+            padding: 4px 10px;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="notes-container">
+      
+
+        <div class="form-container">
+            <input type="text" id="heading" class="heading" placeholder="Title">
+            <input type="text" id="list" class="list" placeholder="Notes...">
+            <button id="submit" class="add">Add</button>
+        </div>
+    </div>
+    <script>
+        let add = document.getElementById("submit");
+        let box = document.getElementsByClassName('notes-container')[0];
+
+        add.addEventListener("click", function(){
+            let heading = document.getElementById("heading").value;
+            let list = document.getElementById("list").value;
+
+            if (heading.trim() === "" && list.trim() === "") {
+                alert("Please enter a title and notes before adding.");
+            } else {
+                let div = document.createElement('div');
+                div.classList.add('notes');
+                box.appendChild(div);
+
+                let h2 = document.createElement('h2');
+                h2.textContent = heading;
+                div.appendChild(h2);
+
+                let ul = document.createElement('ul');
+                div.appendChild(ul);
+
+                let li = document.createElement('li');
+                li.textContent = list;
+                ul.appendChild(li);
+
+                let divmenu = document.createElement("div");
+                divmenu.classList.add('menu');
+                div.appendChild(divmenu);
+
+                let i = document.createElement('i');
+                i.classList.add('fa-solid', 'fa-xmark');
+                divmenu.appendChild(i);
+
+                i.addEventListener("click", function () {
+                    box.removeChild(div);
+                });
+            }
+        });
+        
+        </script>
 </body>
 </html>
